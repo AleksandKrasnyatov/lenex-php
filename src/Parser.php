@@ -47,11 +47,9 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 class Parser
 {
-    /** @var PropertyAccessorInterface */
-    private $accessor;
+    private ?\Symfony\Component\PropertyAccess\PropertyAccessor $accessor = null;
 
     /**
-     * @param SimpleXMLElement $document
      * @return Lenex
      */
     public function parseResult(SimpleXMLElement $document)
@@ -83,7 +81,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Constructor
      */
     public function extractConstructor(SimpleXMLElement $document)
@@ -104,7 +101,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Contact
      */
     public function extractContact(SimpleXMLElement $document)
@@ -131,7 +127,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Meet[]
      */
     public function extractMeets(SimpleXMLElement $document)
@@ -147,7 +142,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Meet
      */
     public function extractMeet(SimpleXMLElement $document)
@@ -217,7 +211,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return AgeDate
      */
     public function extractAgeDate(SimpleXMLElement $document)
@@ -235,7 +228,6 @@ class Parser
     }
 
     /**
-     * @param SimpleXMLElement $document
      * @return Club[]
      */
     public function extractClubs(SimpleXMLElement $document)
@@ -251,7 +243,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Club
      */
     public function extractClub(SimpleXMLElement $document)
@@ -288,7 +279,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Athlete[]
      */
     public function extractAthletes(SimpleXMLElement $document)
@@ -304,7 +294,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Athlete
      */
     public function extractAthlete(SimpleXMLElement $document)
@@ -346,7 +335,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Entry[]
      */
     public function extractEntries(SimpleXMLElement $document)
@@ -362,7 +350,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Entry
      */
     public function extractEntry(SimpleXMLElement $document)
@@ -390,7 +377,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return MeetInfo
      */
     public function extractMeetInfo(SimpleXMLElement $document)
@@ -417,7 +403,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return RelayPosition[]
      */
     public function extractRelayPositions(SimpleXMLElement $document)
@@ -433,7 +418,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return RelayPosition
      */
     public function extractRelayPosition(SimpleXMLElement $document)
@@ -458,7 +442,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Handicap
      */
     public function extractHandicap(SimpleXMLElement $document)
@@ -477,7 +460,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Result[]
      */
     public function extractResults(SimpleXMLElement $document)
@@ -493,7 +475,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Result
      */
     public function extractResult(SimpleXMLElement $document)
@@ -523,7 +504,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Split[]
      */
     public function extractSplits(SimpleXMLElement $document)
@@ -539,7 +519,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Split
      */
     public function extractSplit(SimpleXMLElement $document)
@@ -556,7 +535,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Official[]
      */
     public function extractOfficials(SimpleXMLElement $document)
@@ -572,7 +550,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Official
      */
     public function extractOfficial(SimpleXMLElement $document)
@@ -599,7 +576,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Official[]
      */
     public function extractRelays(SimpleXMLElement $document)
@@ -615,7 +591,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Relay
      */
     public function extractRelay(SimpleXMLElement $document)
@@ -650,7 +625,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Fee[]
      */
     public function extractFees(SimpleXMLElement $document)
@@ -666,7 +640,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Fee
      */
     public function extractFee(SimpleXMLElement $document)
@@ -684,7 +657,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return PointTable
      */
     public function extractPointTable(SimpleXMLElement $document)
@@ -701,7 +673,6 @@ class Parser
     }
 
     /**
-     * @param SimpleXMLElement $document
      * @return Pool
      */
     public function extractPool(SimpleXMLElement $document)
@@ -721,7 +692,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Qualify
      */
     public function extractQualify(SimpleXMLElement $document)
@@ -740,7 +710,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Session[]
      */
     public function extractSessions(SimpleXMLElement $document)
@@ -756,7 +725,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Session
      */
     public function extractSession(SimpleXMLElement $document)
@@ -799,7 +767,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Event[]
      */
     public function extractEvents(SimpleXMLElement $document)
@@ -815,7 +782,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Event
      */
     public function extractEvent(SimpleXMLElement $document)
@@ -856,7 +822,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return AgeGroup[]
      */
     public function extractAgeGroups(SimpleXMLElement $document)
@@ -896,7 +861,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Ranking[]
      */
     public function extractRankings(SimpleXMLElement $document)
@@ -911,7 +875,6 @@ class Parser
     }
 
     /**
-     * @param SimpleXMLElement $document
      * @return Ranking
      */
     public function extractRanking(SimpleXMLElement $document)
@@ -929,7 +892,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Judge[]
      */
     public function extractJudges(SimpleXMLElement $document)
@@ -945,7 +907,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Judge
      */
     public function extractJudge(SimpleXMLElement $document)
@@ -963,7 +924,6 @@ class Parser
     }
 
     /**
-     * @param SimpleXMLElement $document
      * @return Heat[]
      */
     public function extractHeats(SimpleXMLElement $document)
@@ -979,7 +939,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return Heat
      */
     public function extractHeat(SimpleXMLElement $document)
@@ -1000,7 +959,6 @@ class Parser
     }
 
     /**
-     * @param SimpleXMLElement $document
      * @return SwimStyle
      */
     public function extractSwimStyle(SimpleXMLElement $document)
@@ -1022,7 +980,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return TimeStandardRef[]
      */
     public function extractTimeStandardRefs(SimpleXMLElement $document)
@@ -1038,7 +995,6 @@ class Parser
 
 
     /**
-     * @param SimpleXMLElement $document
      * @return TimeStandardRef
      */
     public function extractTimeStandardRef(SimpleXMLElement $document)

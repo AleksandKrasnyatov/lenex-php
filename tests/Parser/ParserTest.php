@@ -21,8 +21,9 @@ use leonverschuren\Lenex\Model\Pool;
 use leonverschuren\Lenex\Model\Session;
 use leonverschuren\Lenex\Model\SwimStyle;
 use leonverschuren\Lenex\Parser;
+use PHPUnit\Framework\TestCase;
 
-class ParserTest extends PHPUnit_Framework_TestCase
+class ParserTest extends TestCase
 {
     public function testExtractLenex()
     {

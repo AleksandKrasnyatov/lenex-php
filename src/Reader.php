@@ -39,16 +39,11 @@ class Reader
 
     protected function readByMimeType($path, $mimeType)
     {
-        switch ($mimeType) {
-            case 'application/zip':
-                return $this->readFromArchive($path);
-            case 'text/xml':
-                return simplexml_load_file($path);
-            case 'application/xml':
-                return simplexml_load_file($path);
-            default:
-                throw new Exception('The mime type "'.$mimeType.'" is not supported');
-        }
+        return match ($mimeType) {
+            'application/zip' => $this->readFromArchive($path),
+            'text/xml', 'application/xml' => simplexml_load_file($path),
+            default => throw new Exception('The mime type "'.$mimeType.'" is not supported'),
+        };
     }
 
 

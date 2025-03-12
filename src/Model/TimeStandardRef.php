@@ -51,7 +51,6 @@ class TimeStandardRef
     }
 
     /**
-     * @param Fee $fee
      * @return $this
      */
     public function setFee(Fee $fee)

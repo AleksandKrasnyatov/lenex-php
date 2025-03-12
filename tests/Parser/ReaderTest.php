@@ -11,8 +11,9 @@
  */
 
 use leonverschuren\Lenex\Reader;
+use PHPUnit\Framework\TestCase;
 
-class ReaderTest extends PHPUnit_Framework_TestCase
+class ReaderTest extends TestCase
 {
     public function testReadLxf()
     {
