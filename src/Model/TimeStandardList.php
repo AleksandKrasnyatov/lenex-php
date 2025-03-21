@@ -21,6 +21,9 @@ class TimeStandardList
     protected $course;
 
     /** @var string */
+    protected $code;
+
+    /** @var string */
     protected $gender;
 
     /** @var int */
@@ -188,5 +191,15 @@ class TimeStandardList
         $this->type = $type;
 
         return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): void
+    {
+        $this->code = $code;
     }
 }

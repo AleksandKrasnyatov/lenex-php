@@ -85,6 +85,9 @@ class Meet
     /** @var Pool */
     protected $pool;
 
+    /** @var Facility */
+    protected $facility;
+
     /** @var Qualify */
     protected $qualify;
 
@@ -534,6 +537,17 @@ class Meet
     }
 
     /**
+     * @param Pool $pool
+     * @return $this
+     */
+    public function setPool($pool)
+    {
+        $this->pool = $pool;
+
+        return $this;
+    }
+
+    /**
      * @return Pool
      */
     public function getPool()
@@ -542,12 +556,20 @@ class Meet
     }
 
     /**
-     * @param Pool $pool
+     * @return Facility
+     */
+    public function getFacility()
+    {
+        return $this->facility;
+    }
+
+    /**
+     * @param $facility
      * @return $this
      */
-    public function setPool($pool)
+    public function setFacility($facility)
     {
-        $this->pool = $pool;
+        $this->facility = $facility;
 
         return $this;
     }

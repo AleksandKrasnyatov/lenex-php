@@ -20,6 +20,9 @@ class Club
     /** @var string */
     protected $code;
 
+    /** @var int|null */
+    protected $clubId;
+
     /** @var Contact */
     protected $contact;
 
@@ -320,5 +323,15 @@ class Club
         $this->type = $type;
 
         return $this;
+    }
+
+    public function getClubId(): ?int
+    {
+        return $this->clubId;
+    }
+
+    public function setClubId(?int $clubId): void
+    {
+        $this->clubId = $clubId;
     }
 }

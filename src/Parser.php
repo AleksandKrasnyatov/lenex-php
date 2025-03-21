@@ -22,6 +22,7 @@ use leonverschuren\Lenex\Model\Constructor;
 use leonverschuren\Lenex\Model\Contact;
 use leonverschuren\Lenex\Model\Entry;
 use leonverschuren\Lenex\Model\Event;
+use leonverschuren\Lenex\Model\Facility;
 use leonverschuren\Lenex\Model\Fee;
 use leonverschuren\Lenex\Model\Handicap;
 use leonverschuren\Lenex\Model\Heat;
@@ -34,12 +35,16 @@ use leonverschuren\Lenex\Model\PointTable;
 use leonverschuren\Lenex\Model\Pool;
 use leonverschuren\Lenex\Model\Qualify;
 use leonverschuren\Lenex\Model\Ranking;
+use leonverschuren\Lenex\Model\Record;
+use leonverschuren\Lenex\Model\RecordList;
 use leonverschuren\Lenex\Model\Relay;
 use leonverschuren\Lenex\Model\RelayPosition;
 use leonverschuren\Lenex\Model\Result;
 use leonverschuren\Lenex\Model\Session;
 use leonverschuren\Lenex\Model\Split;
 use leonverschuren\Lenex\Model\SwimStyle;
+use leonverschuren\Lenex\Model\TimeStandard;
+use leonverschuren\Lenex\Model\TimeStandardList;
 use leonverschuren\Lenex\Model\TimeStandardRef;
 use SimpleXMLElement;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -69,9 +74,11 @@ class Parser
             'MEETS'            => function (Lenex $object, $value) {
                 $object->setMeets($this->extractMeets($value));
             },
-            'RECORDLISTS'      => function () {
+            'RECORDLISTS' => function (Lenex $object, $value) {
+//                $object->setRecordLists($this->extractRecordLists($value));
             },
-            'TIMESTANDARDLIST' => function () {
+            'TIMESTANDARDLISTS' => function (Lenex $object, $value) {
+                $object->setTimeStandardLists($this->extractTimeStandardLists($value));
             },
             'version'          => 'version',
         ];
@@ -79,6 +86,93 @@ class Parser
         return $this->transform($document, $fields, $object);
     }
 
+    private function extractRecords(SimpleXMLElement $element): array
+    {
+        $records = [];
+
+        foreach ($element->RECORD as $recordElement) {
+            $record = new Record();
+            $record->setAthleteName((string)$recordElement['athletename']);
+            $record->setBirthDate(new DateTime((string)$recordElement['birthdate']));
+            $record->setValue((string)$recordElement['value']);
+            // ... остальные поля
+
+            $records[] = $record;
+        }
+
+        return $records;
+    }
+
+    /**
+     * @return TimeStandardList[]
+     */
+    private function extractTimeStandardLists(SimpleXMLElement $document): array
+    {
+        $objects = [];
+
+        foreach ($document->TIMESTANDARDLIST as $timeStandardList) {
+            $objects[] = $this->extractTimeStandardList($timeStandardList);
+        }
+
+        return $objects;
+    }
+
+    /**
+     * @return TimeStandardList
+     */
+    public function extractTimeStandardList(SimpleXMLElement $document)
+    {
+        $object = new TimeStandardList();
+
+        $fields = [
+            'AGEGROUP'        => function (TimeStandardList $object, $value) {
+                $object->setAgeGroup($this->extractAgeGroup($value));
+            },
+            'code'               => 'code',
+            'gender'             => 'gender',
+            'course'             => 'course',
+            'handicap'           => 'handicap',
+            'name'               => 'name',
+            'timestandardlistid' => 'timestandardlistid',
+            'type'               => 'type',
+            'TIMESTANDARDS'      => function (TimeStandardList $object, $value) {
+                $object->setTimeStandards($this->extractTimeStandards($value));
+            },
+        ];
+
+        return $this->transform($document, $fields, $object);
+    }
+
+    /**
+     * @return TimeStandard[]
+     */
+    private function extractTimeStandards(SimpleXMLElement $document): array
+    {
+        $objects = [];
+
+        foreach ($document->TIMESTANDARD as $timeStandard) {
+            $objects[] = $this->extractTimeStandard($timeStandard);
+        }
+
+        return $objects;
+    }
+
+    /**
+     * @return TimeStandard
+     */
+    public function extractTimeStandard(SimpleXMLElement $document)
+    {
+        $object = new TimeStandard();
+
+        $fields = [
+            'SWIMSTYLE'        => function (TimeStandard $object, $value) {
+                $object->setSwimStyle($this->extractSwimStyle($value));
+            },
+            'swimtime'           => 'swimtime',
+        ];
+
+        return $this->transform($document, $fields, $object);
+    }
 
     /**
      * @return Constructor
@@ -140,6 +234,22 @@ class Parser
         return $objects;
     }
 
+    private function extractRecordLists(SimpleXMLElement $element): array
+    {
+        $recordLists = [];
+
+        foreach ($element->RECORDLIST as $recordListElement) {
+            $recordList = new RecordList();
+            $recordList->setType((string)$recordListElement['type']);
+            $recordList->setCourse((string)$recordListElement['course']);
+            $recordList->setRecords($this->extractRecords($recordListElement));
+
+            $recordLists[] = $recordList;
+        }
+
+        return $recordLists;
+    }
+
 
     /**
      * @return Meet
@@ -187,6 +297,9 @@ class Parser
             },
             'POOL'           => function (Meet $object, $value) {
                 $object->setPool($this->extractPool($value));
+            },
+            'FACILITY'       => function (Meet $object, $value) {
+                $object->setFacility($this->extractFacility($value));
             },
             'QUALIFY'        => function (Meet $object, $value) {
                 $object->setQualify($this->extractQualify($value));
@@ -272,6 +385,7 @@ class Parser
             'shortname.en' => 'shortNameEn',
             'swrid'        => 'swrId',
             'type'         => 'type',
+            'clubid'       => 'clubid',
         ];
 
         return $this->transform($document, $fields, $object);
@@ -497,6 +611,9 @@ class Parser
                 $object->setSplits($this->extractSplits($value));
             },
             'swimtime'       => 'swimTime',
+            'entrytime'      => 'entryTime',
+            'entrycourse'    => 'entryCourse',
+            'late'           => 'late',
         ];
 
         return $this->transform($document, $fields, $object);
@@ -685,6 +802,26 @@ class Parser
             'lanemin'     => 'laneMin',
             'temperature' => 'temperature',
             'type'        => 'type',
+        ];
+
+        return $this->transform($document, $fields, $object);
+    }
+
+    /**
+     * @return Pool
+     */
+    public function extractFacility(SimpleXMLElement $document)
+    {
+        $object = new Facility();
+
+        $fields = [
+                'name' => 'name',
+                'city' => 'city',
+                'nation' => 'nation',
+                'state' => 'state',
+                'street' => 'street',
+                'street2' => 'street2',
+                'zip' => 'zip',
         ];
 
         return $this->transform($document, $fields, $object);

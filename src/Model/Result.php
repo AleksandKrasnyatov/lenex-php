@@ -14,38 +14,46 @@ namespace leonverschuren\Lenex\Model;
 
 class Result
 {
-    /** @var string */
+    /** @var string|null */
     protected $comment;
 
-    /** @var int */
+    /** @var int|null */
     protected $eventId;
 
-    /** @var int */
+    /** @var int|null */
     protected $heatId;
 
-    /** @var int */
+    /** @var int|null */
     protected $lane;
 
-    /** @var int */
+    /** @var int|null */
     protected $points;
 
-    /** @var string */
+    /** @var string|null */
     protected $reactionTime;
 
     /** @var RelayPosition[] */
     protected $relayPositions = [];
 
-    /** @var int */
+    /** @var int|null */
     protected $resultId;
 
-    /** @var string */
+    /** @var string|null */
     protected $status;
 
     /** @var Split[] */
     protected $splits = [];
 
-    /** @var string */
+    /** @var string|null */
     protected $swimTime;
+
+    /** @var string|null */
+    protected $entryTime;
+
+    /** @var string|null */
+    protected $entryCourse;
+    /** @var string|null */
+    protected $late;
 
     /**
      * @return string
@@ -254,5 +262,35 @@ class Result
         $this->swimTime = $swimTime;
 
         return $this;
+    }
+
+    public function getEntryTime(): ?string
+    {
+        return $this->entryTime;
+    }
+
+    public function setEntryTime(string $entryTime): void
+    {
+        $this->entryTime = $entryTime;
+    }
+
+    public function getEntryCourse(): ?string
+    {
+        return $this->entryCourse;
+    }
+
+    public function setEntryCourse(string $entryCourse): void
+    {
+        $this->entryCourse = $entryCourse;
+    }
+
+    public function getLate(): ?string
+    {
+        return $this->late;
+    }
+
+    public function setLate(?string $late): void
+    {
+        $this->late = $late;
     }
 }
